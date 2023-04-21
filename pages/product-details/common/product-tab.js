@@ -8,10 +8,15 @@ import {
   Nav,
   NavItem,
   NavLink,
+  FormGroup,
+  Label,
 } from "reactstrap";
 
-const ProductTab = () => {
-  const [activeTab, setActiveTab] = useState("1");
+import { SERVER_URL } from "../../../config";
+import CreateMarkUp from "../../../components/common/CreateMarkUp";
+
+const ProductTab = ({data}) => {
+  const [activeTab, setActiveTab] = useState("2");
 
   return (
     <section className="tab-product m-0">
@@ -22,18 +27,10 @@ const ProductTab = () => {
               <Nav tabs className="nav-material">
                 <NavItem className="nav nav-tabs" id="myTab" role="tablist">
                   <NavLink
-                    className={activeTab === "1" ? "active" : ""}
-                    onClick={() => setActiveTab("1")}
-                  >
-                    Description
-                  </NavLink>
-                </NavItem>
-                <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                  <NavLink
                     className={activeTab === "2" ? "active" : ""}
                     onClick={() => setActiveTab("2")}
                   >
-                    Details
+                    Image
                   </NavLink>
                 </NavItem>
                 <NavItem className="nav nav-tabs" id="myTab" role="tablist">
@@ -41,73 +38,52 @@ const ProductTab = () => {
                     className={activeTab === "3" ? "active" : ""}
                     onClick={() => setActiveTab("3")}
                   >
-                    video
-                  </NavLink>
-                </NavItem>
-                <NavItem className="nav nav-tabs" id="myTab" role="tablist">
-                  <NavLink
-                    className={activeTab === "4" ? "active" : ""}
-                    onClick={() => setActiveTab("4")}
-                  >
-                    Write Review
+                    Details
                   </NavLink>
                 </NavItem>
               </Nav>
               <TabContent activeTab={activeTab} className="nav-material">
-                <TabPane tabId="1">
-                  <p className="mb-0 pb-0">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum." sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi
-                    ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id
-                    est laborum."
-                  </p>
-                </TabPane>
                 <TabPane tabId="2">
-                  <p className="mb-0 pb-0">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum."
-                  </p>
+                  {
+                    data && <img src={`${SERVER_URL}/images/products/${data.image}`} style={{marginTop:'20px'}}/>
+                  }
                 </TabPane>
                 <TabPane tabId="3">
-                  <p className="mb-0 pb-0">
-                    {" "}
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum."
-                  </p>
-                </TabPane>
-                <TabPane tabId="4">
-                  <p className="mb-0 pb-0">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum."
-                  </p>
+                  <div style={{display:'flex', flexDirection:'column', gap:'10px', marginTop:'20px'}}>
+                    <FormGroup>
+                      <Label>Name : {data?.name} </Label>
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Price : {data?.price} </Label>
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Contact Number : {data?.contact_no} </Label>
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Availability : </Label>
+                      {
+                        data?.availability && <CreateMarkUp 
+                          description={data?.availability}
+                        />
+                      }
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Features : </Label>
+                      {
+                        data?.features &&  <CreateMarkUp 
+                          description={data?.features}
+                        />
+                      }
+                    </FormGroup>
+                    <FormGroup>
+                      <Label>Specifications : </Label>
+                      {
+                        data?.specifications && <CreateMarkUp 
+                          description={data?.specifications}
+                        />
+                      }
+                    </FormGroup>
+                  </div>
                 </TabPane>
               </TabContent>
             </Row>

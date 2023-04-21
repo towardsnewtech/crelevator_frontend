@@ -39,7 +39,7 @@ const GET_SINGLE_PRODUCTS = gql`
   }
 `;
 
-const LeftSidebarPage = ({ pathId }) => {
+const LeftSidebarPage = ({ pathId, productData }) => {
   var { loading, data } = useQuery(GET_SINGLE_PRODUCTS, {
     variables: {
       id: parseInt(pathId),
@@ -87,75 +87,10 @@ const LeftSidebarPage = ({ pathId }) => {
       <div className="collection-wrapper">
         <Container>
           <Row>
-            <Col sm="3" className="collection-filter" id="filter">
-              <Filter />
-              <Service />
-              {/* <!-- side-bar single product slider start --> */}
-              <NewProduct />
-              {/* <!-- side-bar single product slider end --> */}
-            </Col>
-            <Col lg="9" sm="12" xs="12">
-              <Container fluid={true}>
-                <Row>
-                  <Col xl="12" className="filter-col">
-                    <div className="filter-main-btn mb-2">
-                      <span onClick={filterClick} className="filter-btn">
-                        <i className="fa fa-filter" aria-hidden="true"></i>{" "}
-                        filter
-                      </span>
-                    </div>
-                  </Col>
-                </Row>
-                {!data ||
-                !data.product ||
-                data.product.length === 0 ||
-                loading ? (
-                  "loading"
-                ) : (
-                  <Row>
-                    <Col lg="6" className="product-thumbnail">
-                      <Slider
-                        {...products}
-                        asNavFor={nav2}
-                        ref={(slider) => (slider1.current = slider)}
-                        className="product-slick"
-                      >
-                        {data.product.images.map((vari, index) => (
-                          <div key={index}>
-                            <ImageZoom image={vari} />
-                          </div>
-                        ))}
-                      </Slider>
-                      <Slider
-                        className="slider-nav"
-                        {...productsnav}
-                        asNavFor={nav1}
-                        ref={(slider) => (slider2.current = slider)}
-                      >
-                        {data.product.variants
-                          ? data.product.images.map((vari, index) => (
-                              <div key={index}>
-                                <Media
-                                  src={`${vari.src}`}
-                                  key={index}
-                                  alt={vari.alt}
-                                  className="img-fluid"
-                                />
-                              </div>
-                            ))
-                          : ""}
-                      </Slider>
-                    </Col>
-                    <Col lg="6" className="rtl-text">
-                      <DetailsWithPrice
-                        item={data.product}
-                        changeColorVar={changeColorVar}
-                      />
-                    </Col>
-                  </Row>
-                )}
-              </Container>
-              <ProductTab />
+            <Col lg="12" sm="12" xs="12">
+              <ProductTab 
+                data={productData}
+              />
             </Col>
           </Row>
         </Container>

@@ -4,10 +4,13 @@ import { MENUITEMS } from "../../constant/menu";
 import { Container, Row } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
+import { getCategoryList } from "../../../action/products";
 
 const NavBar = () => {
   const { t } = useTranslation();
   const [navClose, setNavClose] = useState({ right: "0px" });
+  const [category_list, setCategoryList] = useState([]);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -124,6 +127,20 @@ const NavBar = () => {
     }
   };
 
+  const  handleGotoProductList = (sub_category_id) => {
+    console.log(sub_category_id);
+    router.push(`/subcategory/${sub_category_id}`)
+  }
+
+  useEffect(() => {
+    getCategoryList().then(res => {
+      setCategoryList(res.categories);
+      console.log(res.categories)
+    }).catch(err => {
+      return ;
+    })
+  }, []);
+
   return (
     <div>
       <div className="main-navbar">
@@ -157,69 +174,35 @@ const NavBar = () => {
                         <span className="sub-arrow"></span>
                       </a>
                   }
-                  {menuItem.children && !menuItem.megaMenu ? (
+                  {category_list && category_list.length ? (
                     <ul className="nav-submenu">
-                      {menuItem.children.map((childrenItem, index) => {
+                      {category_list.map((category, index) => {
                         return (
                           <li
                             key={index}
-                            className={`${childrenItem.children ? "sub-menu " : ""
+                            className={`${category ? "sub-menu " : ""
                               }`}
                           >
-                            {childrenItem.type === "sub" ? (
                               <a
                                 href={null}
-                                onClick={() => toggletNavActive(childrenItem)}
                               >
-                                {childrenItem.title}
-                                {childrenItem.tag === "new" ? (
-                                  <span className="new-tag">new</span>
-                                ) : (
-                                  ""
-                                )}
+                                {category.name}
                                 <i className="fa fa-angle-right ps-2"></i>
                               </a>
-                            ) : (
-                              ""
-                            )}
-                            {childrenItem.type === "link" ? (
-                              <Link href={`${childrenItem.path}`}>
-                                <a>
-                                  {childrenItem.title}
-                                  {childrenItem.tag === "new" ? (
-                                    <span className="new-tag">new</span>
-                                  ) : (
-                                    ""
-                                  )}
-                                </a>
-                              </Link>
-                            ) : (
-                              ""
-                            )}
-                            {childrenItem.children ? (
+                           
+                            {category.SubCategories.length ? (
                               <ul
-                                className={`nav-sub-childmenu ${childrenItem.active ? "menu-open " : "active"
+                                className={`nav-sub-childmenu menu-open
                                   }`}
                               >
-                                {childrenItem.children.map(
-                                  (childrenSubItem, key) => (
+                                {category.SubCategories.map(
+                                  (subcategory, key) => (
                                     <li key={key}>
-                                      {childrenSubItem.type === "link" ? (
-                                        <Link href={childrenSubItem.path}>
-                                          <a className="sub-menu-title">
-                                            {childrenSubItem.title}
-                                            {childrenSubItem.tag === "new" ? (
-                                              <span className="new-tag">
-                                                new
-                                              </span>
-                                            ) : (
-                                              ""
-                                            )}
-                                          </a>
-                                        </Link>
-                                      ) : (
-                                        ""
-                                      )}
+                                      <a className="sub-menu-title"
+                                        onClick={() => handleGotoProductList(subcategory.id)}
+                                      >
+                                        {subcategory.name}
+                                      </a>
                                     </li>
                                   )
                                 )}

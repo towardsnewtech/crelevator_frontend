@@ -1,4 +1,6 @@
-const nextConfig = {
+const removeImports = require("next-remove-imports");
+
+const nextConfig = removeImports({
   env: {
     API_URL: "http://localhost:4000/graphql",
   },
@@ -16,4 +18,5 @@ const nextConfig = {
 
     return config;
   },
-};
+  
+});

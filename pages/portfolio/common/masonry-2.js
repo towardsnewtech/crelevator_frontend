@@ -9,6 +9,7 @@ import {
   watchData,
 } from "../../../data/portfolioData";
 import { Tabs, TabList, TabPanel, Tab } from "react-tabs";
+import { SERVER_URL } from "../../../config";
 
 const MasterTabPannel = ({ data, grid, colClass }) => {
   return (
@@ -19,13 +20,13 @@ const MasterTabPannel = ({ data, grid, colClass }) => {
         className="isotopeContainer row"
         columnClassName={`isotopeSelector ${colClass}`}
       >
-        {data.length > 0
-          ? data.map((item, index) => (
+        {productList.length > 0
+          ? productList.map((product, index) => (
               <div className="overlay" key={index}>
                 <div className="border-portfolio">
                   <div>
                     <Media
-                      src={item.img}
+                      src={`${SERVER_URL}/images/products/${product.image}`}
                       className="img-fluid blur-up lazyload"
                     />
                   </div>

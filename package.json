@@ -20,6 +20,7 @@
     "@types/react-slick": "^0.23.8",
     "@types/react-sticky-el": "^1.0.3",
     "@types/reactstrap": "^8.7.1",
+    "@uiw/react-md-editor": "^3.20.8",
     "@zeit/next-typescript": "^1.1.1",
     "animate.css": "^4.1.1",
     "apexcharts": "^3.37.1",
@@ -38,7 +39,9 @@
     "next-compose-plugins": "^2.2.1",
     "next-fonts": "^1.5.1",
     "next-images": "^1.8.4",
+    "next-mdx-remote": "^4.4.1",
     "next-redux-wrapper": "^8.1.0",
+    "next-remove-imports": "^1.0.11",
     "nprogress": "^0.2.0",
     "react": "17.0.2",
     "react-apexcharts": "^1.4.0",
@@ -67,6 +70,7 @@
     "reactstrap": "^8.10.0",
     "responsive-loader": "^3.0.4",
     "rxjs-compat": "^6.6.7",
-    "sass": "^1.52.3"
+    "sass": "^1.52.3",
+    "styled-components": "^5.3.9"
   }
 }
