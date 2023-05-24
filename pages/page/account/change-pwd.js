@@ -70,21 +70,21 @@ const ChangePassword = () => {
     return (
         authItem ?
             <CommonLayout parent="home" title="profile" newLatter={false}>
-                <section className="contact-page register-page">
+                <section className="contact-page register-page m-3">
                     <Container>
                         <Row>
                             <Col sm="12" className="theme-form">
                                 <h3>Change Password</h3>
                                 <Row>
                                     <Col md="6">
-                                        <Label className="form-label" for="newPWD">New Password</Label>
+                                        <Label className="form-label" htmlFor="newPWD">New Password</Label>
                                         <Input type="password" className="form-control" id="newPWD" placeholder="Enter New Password"
                                             required="" value={newPWD} onChange={changeNewPWD} />
                                     </Col>
                                     <Col md="6">
                                     </Col>
                                     <Col md="6">
-                                        <Label className="form-label" for="confirmPWD">Confirm Password</Label>
+                                        <Label className="form-label" htmlFor="confirmPWD">Confirm Password</Label>
                                         <Input type="password" className="form-control" id="confirmPWD" placeholder="Confirm Password"
                                             required="" value={confirmPWD} onChange={changeConfirmPWD} />
                                     </Col>                                        

@@ -148,7 +148,7 @@ const MasterFooterTwo = ({
                             setIsOpen(!isOpen);
                           }}
                         >
-                          my account
+                          Menu
                           <span className="according-menu"></span>
                         </h4>
                       </div>

@@ -16,7 +16,6 @@ const LeftSidebar = () => {
     if(id) {
       getProductInformation({id}).then(res => {
         setData(res.product);
-        console.log(res);
       }).catch(err => {
         console.log(err);
         return;
@@ -26,9 +25,9 @@ const LeftSidebar = () => {
 
   return (
     <CommonLayout parent="Home" title="Product">
-        <LeftSidebarPage pathId={id}
-          productData={data}
-        />
+      <LeftSidebarPage pathId={id}
+        productData={data}
+      />
     </CommonLayout>
   );
 }

@@ -6888,7 +6888,6 @@ footer {
       }
     }
     .product-info {
-      padding-left: 15px;
       padding-bottom: 15px;
       background-color: $white;
       border-top: 1px solid rgba($round-border, 0.2);
@@ -8646,6 +8645,7 @@ footer {
   }
 }
 .about-page {
+  border:'1px solid red';
   p {
     margin-bottom: -7px;
   }

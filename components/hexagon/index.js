@@ -32,8 +32,8 @@ const HexGrid = () => {
 
   return (
     <HexagonGrid
-      gridWidth={400}
-      gridHeight={400}
+      gridWidth={500}
+      gridHeight={500}
       hexagons={hexagons}
       hexProps={getHexProps}
       renderHexagonContent={renderHexagonContent}

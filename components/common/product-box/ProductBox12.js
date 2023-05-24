@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Row, Col, Media, Modal, ModalBody, ModalHeader } from "reactstrap";
 import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
 import CartContext from "../../../helpers/cart";
+import { SERVER_URL } from "../../../config";
+import CreateMarkUp from "../CreateMarkUp";
 
 const ProductItem = ({
   product,
@@ -33,8 +35,8 @@ const ProductItem = ({
   };
 
   const clickProductDetail = () => {
-    const titleProps = product.title.split(" ").join("");
-    router.push(`/product-details/${product.id}` + "-" + `${titleProps}`, undefined, { shallow: true });
+    const titleProps = product.title?.split(" ").join("");
+    router.push(`/product-details/${product.id}`, undefined, { shallow: true });
   };
 
   let RatingStars = [];
@@ -42,6 +44,7 @@ const ProductItem = ({
   for (var i = 0; i < rating; i++) {
     RatingStars.push(<i className="fa fa-star" key={i}></i>);
   }
+
   return (
     <div className="product-box product-wrap">
       <div className="img-wrapper">
@@ -53,12 +56,21 @@ const ProductItem = ({
             ""
           )}
         </div>
-        <div className="front">
+        <div className="front"
+          style={{
+          padding:'20px'
+         }}
+         >
           <a href={null}>
             <Media
-              alt=""
-              src={product.images[0].src}
-              className="img-fluid blur-up lazyload bg-img"
+              alt="44"
+              src={`${SERVER_URL + '\\images\\products\\' + product.image}`}
+              className="blur-up lazyload bg-img"
+              width={'100%'}
+              // height={'320px'}
+              style={{
+                maxHeight:'300px'
+              }}
             />
           </a>
         </div>
@@ -84,9 +96,11 @@ const ProductItem = ({
                 <Col lg="12">
                   <div className="media">
                     <Media
-                      src={product.images[0].src}
-                      alt=""
+                      src={`${SERVER_URL + '\\images\\products\\' + product.image}`}
+                      alt="33"
                       className="img-fluid"
+                      width={'100%'}
+                      height={'320px'}
                     />
                     <div className="media-body align-self-center text-center">
                       <h5>
@@ -127,19 +141,21 @@ const ProductItem = ({
       <div className="product-info">
         <div className="rating">{RatingStars}</div>
         <h6>{product.title}</h6>
-        <h4>
-          {currency.symbol}
-          {(
-            (product.price - (product.price * product.discount) / 100) *
-            currency.value
-          ).toFixed(2)}
-          <del>
-            <span className="money">
-              {currency.symbol}
-              {(product.price * currency.value).toFixed(2)}
-            </span>
-          </del>
-        </h4>
+        {
+          window.localStorage.getItem("token") ?
+          <h4>
+            {currency.symbol}
+            {Number(product.price).toFixed(2)}
+            <del>
+              <span className="money">
+                {currency.symbol}
+                {Number(product.price).toFixed(2)}
+              </span>
+            </del>
+          </h4>
+          :
+          <h5 style={{ color: '#b32923', fontSize: 13 }}>Call for Information</h5>
+        }
       </div>
       <Modal
         isOpen={modal}
@@ -153,19 +169,25 @@ const ProductItem = ({
             <Col lg="6" xs="12">
               <div className="quick-view-img">
                 <Media
-                  src={product.images[0].src}
-                  alt=""
-                  className="img-fluid"
+                  src={`${SERVER_URL + '\\images\\products\\' + product.image}`}
+                  alt="11"
+                  width={'100%'}
+                  height={'320px'}
                 />
               </div>
             </Col>
             <Col lg="6" className="rtl-text">
               <div className="product-right">
                 <h2> {product.title} </h2>
-                <h3>
-                  {currency.symbol}
-                  {(product.price * currency.value).toFixed(2)}
-                </h3>
+                {
+                  window.localStorage.getItem("token") ?
+                  <h3>
+                    {currency.symbol}
+                    {(product.price * currency.value).toFixed(2)}
+                  </h3>
+                  :
+                  <h5 style={{ color: '#b32923', fontSize: 18 }}>Call for Information</h5>
+                }
                 {product.variants ? (
                   <ul className="color-variant">
                     {uniqueTags ? (
@@ -194,74 +216,82 @@ const ProductItem = ({
                   ""
                 )}
                 <div className="border-product">
-                  <h6 className="product-title">product details</h6>
-                  <p>{product.description}</p>
+                  <span className="product-title">Name: </span>
+                  <span style={{ color: 'rgb(199, 32, 24)' }}>{product.name}</span>
+                  <h6 className="product-title" style={{ marginTop: '0.5rem' }}>product features</h6>
+                  {/* <p>{ product.features.replace(/<p>/g, "") }</p> */}
+                  <CreateMarkUp description={product.features} />
                 </div>
-                <div className="product-description border-product">
-                  {product.size ? (
-                    <div className="size-box">
-                      <ul>
-                        {product.size.map((size, i) => {
-                          return (
-                            <li key={i}>
-                              <a href={null}>{size}</a>
-                            </li>
-                          );
-                        })}
-                      </ul>
+                {
+                  window.localStorage.getItem("token") &&
+                  <>
+                    <div className="product-description border-product">
+                      {product.size ? (
+                        <div className="size-box">
+                          <ul>
+                            {product.size.map((size, i) => {
+                              return (
+                                <li key={i}>
+                                  <a href={null}>{size}</a>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      <h6 className="product-title">quantity</h6>
+                      <div className="qty-box">
+                        <div className="input-group">
+                          <span className="input-group-prepend">
+                            <button
+                              type="button"
+                              className="btn quantity-left-minus"
+                              onClick={minusQty}
+                              data-type="minus"
+                              data-field=""
+                            >
+                              <i className="fa fa-angle-left"></i>
+                            </button>
+                          </span>
+                          <input
+                            type="text"
+                            name="quantity"
+                            value={quantity}
+                            onChange={changeQty}
+                            className="form-control input-number"
+                          />
+                          <span className="input-group-prepend">
+                            <button
+                              type="button"
+                              className="btn quantity-right-plus"
+                              onClick={() => plusQty(product)}
+                              data-type="plus"
+                              data-field=""
+                            >
+                              <i className="fa fa-angle-right"></i>
+                            </button>
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  ) : (
-                    ""
-                  )}
-                  <h6 className="product-title">quantity</h6>
-                  <div className="qty-box">
-                    <div className="input-group">
-                      <span className="input-group-prepend">
-                        <button
-                          type="button"
-                          className="btn quantity-left-minus"
-                          onClick={minusQty}
-                          data-type="minus"
-                          data-field=""
-                        >
-                          <i className="fa fa-angle-left"></i>
-                        </button>
-                      </span>
-                      <input
-                        type="text"
-                        name="quantity"
-                        value={quantity}
-                        onChange={changeQty}
-                        className="form-control input-number"
-                      />
-                      <span className="input-group-prepend">
-                        <button
-                          type="button"
-                          className="btn quantity-right-plus"
-                          onClick={() => plusQty(product)}
-                          data-type="plus"
-                          data-field=""
-                        >
-                          <i className="fa fa-angle-right"></i>
-                        </button>
-                      </span>
+                    <div className="product-buttons">
+                      <button
+                        className="btn btn-solid"
+                        onClick={() => addCart(product, quantity)}
+                      >
+                        add to cart
+                      </button>
+                      <button
+                        className="btn btn-solid"
+                        onClick={clickProductDetail}
+                      >
+                        View detail
+                      </button>
                     </div>
-                  </div>
-                </div>
-                <div className="product-buttons">
-                  <button
-                    className="btn btn-solid"
-                    onClick={() => addCart(product, quantity)}
-                  >
-                    add to cart
-                  </button>
-                  <button
-                    className="btn btn-solid"
-                    onClick={clickProductDetail}
-                  >
-                    View detail
-                  </button>
-                </div>
+                  </>
+                }
               </div>
             </Col>
           </Row>

@@ -583,7 +583,7 @@ const Dashboard = () => {
                                       />
                                       <Label
                                         className="form-check-label"
-                                        for="exampleRadios1"
+                                        htmlFor="exampleRadios1"
                                       >
                                         Allow Desktop Notifications
                                       </Label>
@@ -598,7 +598,7 @@ const Dashboard = () => {
                                       />
                                       <Label
                                         className="form-check-label"
-                                        for="exampleRadios2"
+                                        htmlFor="exampleRadios2"
                                       >
                                         Enable Notifications
                                       </Label>
@@ -613,7 +613,7 @@ const Dashboard = () => {
                                       />
                                       <Label
                                         className="form-check-label"
-                                        for="exampleRadios3"
+                                        htmlFor="exampleRadios3"
                                       >
                                         Get notification for my own activity
                                       </Label>
@@ -628,7 +628,7 @@ const Dashboard = () => {
                                       />
                                       <Label
                                         className="form-check-label"
-                                        for="exampleRadios4"
+                                        htmlFor="exampleRadios4"
                                       >
                                         DND
                                       </Label>
@@ -651,7 +651,7 @@ const Dashboard = () => {
                                       />
                                       <Label
                                         className="form-check-label"
-                                        for="exampleRadios4"
+                                        htmlFor="exampleRadios4"
                                       >
                                         I have a privacy concern
                                       </Label>
@@ -666,7 +666,7 @@ const Dashboard = () => {
                                       />
                                       <Label
                                         className="form-check-label"
-                                        for="exampleRadios5"
+                                        htmlFor="exampleRadios5"
                                       >
                                         This is temporary
                                       </Label>
@@ -681,7 +681,7 @@ const Dashboard = () => {
                                       />
                                       <Label
                                         className="form-check-label"
-                                        for="exampleRadios6"
+                                        htmlFor="exampleRadios6"
                                       >
                                         other
                                       </Label>
@@ -710,7 +710,7 @@ const Dashboard = () => {
                                       />
                                       <Label
                                         className="form-check-label"
-                                        for="exampleRadios7"
+                                        htmlFor="exampleRadios7"
                                       >
                                         No longer usable
                                       </Label>
@@ -725,7 +725,7 @@ const Dashboard = () => {
                                       />
                                       <Label
                                         className="form-check-label"
-                                        for="exampleRadios8"
+                                        htmlFor="exampleRadios8"
                                       >
                                         Want to switch on other account
                                       </Label>
@@ -740,7 +740,7 @@ const Dashboard = () => {
                                       />
                                       <Label
                                         className="form-check-label"
-                                        for="exampleRadios9"
+                                        htmlFor="exampleRadios9"
                                       >
                                         other
                                       </Label>

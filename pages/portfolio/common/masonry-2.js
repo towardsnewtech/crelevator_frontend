@@ -33,7 +33,7 @@ const MasterTabPannel = ({ data, grid, colClass }) => {
                 </div>
               </div>
             ))
-          : "!! No Blogs Found"}
+          : "!! Loading"}
       </Masonry>
     </>
   );

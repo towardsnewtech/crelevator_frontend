@@ -154,7 +154,7 @@ const MasterFooterThree = ({
                         } else setIsOpen(true);
                       }}
                     >
-                      my account
+                      Menu
                       <span className="according-menu"></span>
                     </h4>
                   </div>

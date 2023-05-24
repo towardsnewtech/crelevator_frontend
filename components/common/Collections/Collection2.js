@@ -8,6 +8,7 @@ import CartContext from "../../../helpers/cart";
 import { WishlistContext } from "../../../helpers/wishlist/WishlistContext";
 import { CompareContext } from "../../../helpers/Compare/CompareContext";
 import PostLoader from "../PostLoader";
+import { GetAllProduct } from "../../../action/products";
 
 const GET_PRODUCTS = gql`
   query products($type: _CategoryType!, $indexFrom: Int!, $limit: Int!) {
@@ -54,14 +55,19 @@ const TopCollection = ({
   const contextWishlist = useContext(WishlistContext);
   const contextCompare = useContext(CompareContext);
   const quantity = context.quantity;
+  const [data, setData] = React.useState();
 
-  var { loading, data } = useQuery(GET_PRODUCTS, {
-    variables: {
-      type: type,
-      indexFrom: 0,
-      limit: 8,
-    },
-  });
+  React.useEffect(() => {
+    GetAllProduct(data).then(res => {
+      if(res) {
+          if(res.success) {
+            setData(res.products)
+          } else {
+            notify(res.msg, false);
+          }
+      }
+    })
+  }, [])
 
   return (
     <>
@@ -75,32 +81,34 @@ const TopCollection = ({
                   <h2 className="title-inner3">{title}</h2>
                   <div className="line"></div>
                 </div>
-                {!data ||
-                !data.products ||
-                !data.products.items ||
-                data.products.items.length === 0 ||
-                loading ? (
-                  <div className="row mx-0 margin-default">
-                    <div className="col-xl-3 col-lg-4 col-6">
-                      <PostLoader />
-                    </div>
-                    <div className="col-xl-3 col-lg-4 col-6">
-                      <PostLoader />
-                    </div>
-                    <div className="col-xl-3 col-lg-4 col-6">
-                      <PostLoader />
-                    </div>
-                    <div className="col-xl-3 col-lg-4 col-6">
-                      <PostLoader />
-                    </div>
-                  </div>
-                ) : (
+                {
+                // !data ||
+                // !data.products ||
+                // !data.products.items ||
+                // data.products.items.length === 0 ||
+                // loading ? (
+                //   <div className="row mx-0 margin-default">
+                //     <div className="col-xl-3 col-lg-4 col-6">
+                //       <PostLoader />
+                //     </div>
+                //     <div className="col-xl-3 col-lg-4 col-6">
+                //       <PostLoader />
+                //     </div>
+                //     <div className="col-xl-3 col-lg-4 col-6">
+                //       <PostLoader />
+                //     </div>
+                //     <div className="col-xl-3 col-lg-4 col-6">
+                //       <PostLoader />
+                //     </div>
+                //   </div>
+                // ) : 
+                (
                   <Slider
                     {...productSlider}
                     className="product-5 product-m no-arrow"
                   >
                     {data &&
-                      data.products.items.slice(0, 8).map((product, index) => (
+                      data.slice(0, 8).map((product, index) => (
                         <div key={index}>
                           <ProductItem
                             product={product}

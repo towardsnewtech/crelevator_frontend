@@ -7,7 +7,6 @@ const SingleProduct = (props) => {
     } = props ;
 
     React.useEffect(() => {
-        console.log(product);    
     }, [product]);
 
     return (

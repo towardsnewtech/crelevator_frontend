@@ -1,1 +1,3 @@
-export const SERVER_URL = 'http://api.crelevator.com';
+export const SERVER_URL = 'https://api.crelevator.com';
+
+// http://api.crelevator.com

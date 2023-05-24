@@ -103,49 +103,41 @@ export const updateAddress = (data) => {
     return promise;
 }
 
-export const forgotPassword = (data, history) => async dispatch => {
-    const res = await axios.request(
-        `${SERVER_URL}/api/user/forgotpassword`,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            data: data,
-        }
-    ).catch(err => {
-        console.log('error: ', err);
-    });
-
-    if(res && res.data) {
-        if(res.data.success) {
-            let msg = '';
-            if(localStorage.getItem('lang') === 'fr') {
-                msg = 'Veuillez confirmer votre e-mail pour réinitialiser le mot de passe.';
-            } else {
-                msg = 'Please confirm your email to reset the password.';
-            }
-
-            dispatch({
-                type: SET_MESSAGE,
-                payload: {
-                    display: true,
-                    message: msg,
-                },
-            });
-        } else {
-            dispatch({
-                type: SET_MESSAGE,
-                payload: {
-                    display: true,
-                    message: res.data.msg,
-                },
-            });
-        }
-    }
+export const forgotPassword = (data) => {
+    var promise = new Promise( (resolve, reject) => {
+		axios.request({
+			url: `${SERVER_URL}/api/user/forgotpassword`,
+			method: 'POST',
+			data: data
+		}).then(res => {
+			if (res) {
+				resolve(res.data);
+			}
+		}).catch(err => {
+			reject(err);
+		});
+	});
+    return promise;
 }
 
-export const resetPassword = (data) => async dispatch => {
+export const verifyEmailForPassword = (data) => {
+    var promise = new Promise( (resolve, reject) => {
+		axios.request({
+			url: `${SERVER_URL}/api/user/verifyemailforpassword`,
+			method: 'POST',
+			data: data
+		}).then(res => {
+			if (res) {
+				resolve(res.data);
+			}
+		}).catch(err => {
+			reject(err);
+		});
+	});
+    return promise;
+}
+
+export const resetPassword = async (data) => {
     const res = await axios.request(
         `${SERVER_URL}/api/user/resetPassword`,
         {
@@ -198,4 +190,21 @@ export const updateOrgInfo = (data) => async dispatch => {
             return res.data.id;
         }
     }
+}
+
+export const verifyEmail = (data) => {  
+    var promise = new Promise( (resolve, reject) => {
+		axios.request({
+			url: `${SERVER_URL}/api/user/verifyemail`,
+			method: 'POST',
+			data: data
+		}).then(res => {
+			if (res) {
+				resolve(res.data);
+			}
+		}).catch(err => {
+			reject(err);
+		});
+	});
+    return promise;
 }

@@ -1,37 +1,29 @@
 export const MENUITEMS = [
    {
-      title: 'Home', type: 'link', path: '/'
+      title: 'ABOUT US', type: 'link', path: '/about-us'
    },
    {
-      title: 'Products', type: 'sub', children: [
-         {
-            title: 'COMMECIAL', type: 'sub', children: [
-               { path: '/product-details/right_sidebar', title: 'Shat Components', type: 'link' },
-               { path: '/product-details/no-sidebar', title: 'Doors', type: 'link' },
-               { path: '/product-details/right_sidebar', title: 'Safety', type: 'link' },
-               { path: '/product-details/no-sidebar', title: 'Safety', type: 'link' },
-               { path: '/product-details/1', title: 'Electric', type: 'link' },
-            ]
-         },
-         {
-            title: "RESIDENTIAL", type: "sub", children: [
-               { path: '/product-details/right_sidebar', title: 'Shat Components', type: 'link' },
-               { path: '/product-details/no-sidebar', title: 'Doors', type: 'link' },
-               { path: '/product-details/right_sidebar', title: 'Safety', type: 'link' },
-               { path: '/product-details/no-sidebar', title: 'Safety', type: 'link' },
-               { path: '/product-details/1', title: 'Electric', type: 'link' },
-            ]
-         },
+      title: 'Products', type: 'sub', path: '/products', children: []
+   },
+   {
+      title: 'RESOURCES', type: 'sub', path: '/resources' , children: [
+         {title: 'Technical Support', type: 'sub', children: [
+            {title: 'Training Videos', type: 'link', path: '/resources/technical-support/training-videos'},
+            {title: 'PDFs Materials', type: 'link', path: '/resources/technical-support/pdfs-materials'}
+         ]},
+         {title: 'Forms', type: 'link', path: '/resources/forms'},
+         {title: 'FAQ', type: 'link', path: '/resources/faq'}
       ]
    },
    {
-      title: 'ABOUT US', type: 'link', path: '/page/about-us'
+      title: 'CONTACT US', type: 'sub', path: '/contact-us', children: [
+         {title: 'Quote Request', type: 'link', path: '/contact-us/quote-request'},
+         {title: 'CRES Information', type: 'link', path: '/contact-us/cres-information'},
+         {title: 'News', type: 'link', path: '/contact-us/news'}
+      ]
    },
    {
-      title: 'CONTACT US', type: 'link', path: '/page/contact-us'
-   },
-   {
-      title: 'FAQ', type: 'link', path: '/page/faq'
+      title: 'REQUEST A QUOTE', type: 'link', path: '/contact-us/quote-request'
    },
 ]
 

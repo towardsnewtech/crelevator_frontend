@@ -1,31 +1,54 @@
 import React,{Fragment} from 'react';
 import { Row, Col ,Container} from "reactstrap";
+import useWindowSize from '../../common';
 
 const AboutSection = () => {
+    const size = useWindowSize();
+
     return (
         <Fragment>
             <section>
                 <Container>
                     <Row>
-                        <Col lg="8" className="m-auto">
+                        <Col lg="2"></Col>
+                        <Col lg="8" className="m-auto mb-5">
                             <div className="title3">
-                                <h2 className="title-inner3">welcome to crelevator</h2>
+                                <h2>CRES CONTROLLERS</h2>
                                 <div className="line"></div>
-                            </div>
-                            <div className="about-text">
-                                <p>
-                                Welcome to CR Elevator Supply, your one-stop destination for all your residential and commercial elevator needs. We are a leading supplier of high-quality elevator parts and accessories that cater to the needs of both commercial and residential properties.
-                                <br/>
-                                At CR Elevator Supply, we pride ourselves on offering a vast selection of elevator components, from elevator buttons and fixtures to hydraulic cylinders and electrical equipment. We understand that every elevator is unique, and that's why we carry a wide range of products to ensure that we can meet all of your elevator supply needs.
-                                <br/>
-                                Our team consists of experienced professionals who are knowledgeable about the elevator industry and are dedicated to providing the best service possible. We understand that elevator downtime can be costly, which is why we offer fast and reliable shipping on all of our products, so you can get your elevator up and running as quickly as possible.
-                                <br/>
-                                We value our customers and strive to provide exceptional service, whether you're a contractor, building owner, or elevator maintenance technician. Our team is always available to answer any questions you may have and help you find the right parts for your elevator.
-                                <br/>
-                                Thank you for choosing CR Elevator Supply as your elevator parts supplier. We look forward to serving you and helping you keep your elevators running smoothly.
-                                </p>
+                                {
+                                    size.width > 570 ? 
+                                    <>
+                                        <h3 style={{ color: 'black' }}>RISING ABOVE EXPECTATIONS</h3>
+                                        <h3 style={{ color: 'black' }}>CR Elevator - Your Reliable Elevator Partner</h3>
+                                    </> : 
+                                    <>
+                                        <h5 style={{ color: 'black' }}>RISING ABOVE EXPECTATIONS</h5>
+                                        <h5 style={{ color: 'black' }}>CR Elevator - Your Reliable Elevator Partner</h5>
+                                    </>
+                                }
                             </div>
                         </Col>
+                        <Col lg="2"></Col>
+                        <Col md="1"></Col>
+                        <Col md="5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <h3 style={size.width > 570 ? { color: 'red', marginBottom: '2rem' } : { color: 'red', marginBottom: '2rem', fontSize: 18 } }>HYDRAULIC CONTROLLER</h3>
+                            <img src={'/assets/images/new/Hydra Product Image Medium 400-400 72dpi.png'} width={'40%'} />
+                            <p style={{ color: 'black', fontSize: 22, textAlign: 'justify', lineHeight: '1.3', fontSize: '16px' }} className='mt-4'>Introducing Hydro Controller, the next generation in hydraulic elevator technology.
+                                <br/><br/>With Adaptive Slowdown, passengers can enjoy smooth and consistent rides, while saving you time and money.
+                                <br/><br/>Our advanced controller comes equipped with a range of built-in features that can be easily adjusted to suit your needs. No custom software is required.
+                                <br/><br/>Plus, our traveler cables are smaller than previous generations, making installation a breeze. Setting up our system has never been easier. Choose Hydro Controller for an elevated elevator experience.
+                            </p>
+                        </Col>
+                        <Col md="5" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <h3 style={size.width > 570 ? { color: 'red', marginBottom: '2rem' } : { color: 'red', marginBottom: '2rem', fontSize: 18 }}>TRACTION CONTROLLER</h3>
+                            <img src={'/assets/images/new/Controlle Product Image Medium 400-400 72dpi.png'} width={'40%'}/>
+                            <p style={{ color: 'black', fontSize: 22, textAlign: 'justify', lineHeight: '1.3', fontSize: '16px' }} className='mt-4'>Experience the future of elevator technology with our state-of-the-art traction controller.
+                                <br/><br/>Designed with advanced engineering and a simple user interface, it pushes past conventional non-proprietary controllers to deliver supercharged performance with speeds beyond your expectations.
+                                <br/><br/>Our innovative capabilities allow mechanics to easily share parameters within groups, stream inspection testing, and grant easy access to construction mode.
+                                <br/><br/>This not only saves you time and effort, but also ensures a smooth and hassle-free experience for both technicians and passengers. Choose our traction controller for unparalleled performance and reliability.
+                            </p>
+                        </Col>
+                        <Col md="1"></Col>
                     </Row>
                 </Container>
             </section>

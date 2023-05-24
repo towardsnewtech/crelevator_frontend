@@ -9,12 +9,13 @@ import { setAuthState } from '../../../store/slices/authSlice';
 import {
     getAddress
 } from '../../../action';
+import { SERVER_URL } from '../../../config';
 
 const Dashboard = () => {
     const router = useRouter();
     const dispatch = useDispatch();
     const [accountInfo,setAccountInfo] = useState(false);
-    const [authItem, setAuthItem] = React.useState(false);
+    // const [authItem, setAuthItem] = React.useState(false);
     const [email, setEmail] = React.useState("");
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
@@ -22,6 +23,7 @@ const Dashboard = () => {
     const [address1, setAddress1] = React.useState("");
     const [country, setCountry] = React.useState("US");
     const [city, setCity] = React.useState("");
+    const [photo, setPhoto] = React.useState("");
 
     const logout = () => {
         localStorage.removeItem('token');
@@ -31,16 +33,17 @@ const Dashboard = () => {
     };
 
     React.useEffect(() => {
-        if(localStorage.getItem('token') === null) {
-            setAuthItem(false);
-        } else {
-            setAuthItem(true);
-        }
+        // if(localStorage.getItem('token') === null) {
+        //     setAuthItem(false);
+        // } else {
+        //     setAuthItem(true);
+        // }
         if(localStorage.getItem('user') !== 'null') {
             const user = JSON.parse(localStorage.getItem('user'));
             setEmail(user.email);
             setFirstName(user.first_name);
             setLastName(user.last_name);
+            setPhoto(user.photo);
         }
         const data = {
             user_id: user_id,
@@ -56,7 +59,7 @@ const Dashboard = () => {
     }, []);
     
     return (
-        authItem ? 
+        localStorage.getItem('token') ? 
             <CommonLayout parent="home" title="dashboard">
                 <section className="section-b-space">
                     <Container>
@@ -65,13 +68,19 @@ const Dashboard = () => {
                                 {window.innerWidth <= 991 ?
                                 <div className="account-sidebar" onClick={() => setAccountInfo(!accountInfo)}><a className="popup-btn">my account</a></div>
                                 :""}
-                                <div className="dashboard-left" style={accountInfo ? {left:"0px"} : {}}> 
+                                <div className="dashboard-left" style={accountInfo ? {left:"0px"} : {}}>                                     
                                     <div className="collection-mobile-back" onClick={() => setAccountInfo(!accountInfo)}>
                                         <span className="filter-back">
                                             <i className="fa fa-angle-left" aria-hidden="true"></i> back
                                         </span>
                                     </div>
                                     <div className="block-content">
+                                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                            { photo == "" || photo == undefined ?
+                                                <div style={{ width: '150px', height: '150px', borderRadius: '50%', border: '1px solid #333', marginBottom: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center'}}><h4 style={{ color: 'rgb(199, 32, 24)' }}>No Photo</h4></div>
+                                                : <img src={`${SERVER_URL + '\\images\\photo\\' + photo}`} alt="Uploaded Image" style={{ width: '150px', borderRadius: '50%', marginBottom: '2rem' }} />
+                                            }
+                                        </div>
                                         <ul>
                                             <li className="active"><a href="#">Account Info</a></li>
                                             <li><a href="#">My Orders</a></li>

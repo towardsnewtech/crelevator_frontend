@@ -4,6 +4,10 @@ import isFunction from "lodash/isFunction";
 import isEmpty from "lodash/isEmpty";
 import times from "lodash/times";
 import Hexagon from "react-hexagon";
+import { GetAllProduct } from "../../action/products"
+import { SERVER_URL } from "../../config";
+import { useRouter } from 'next/router' ;
+import tagStyled from 'styled-components' 
 
 const getGridDimensions = (gridWidth, gridHeight, N) => {
   const a = (5 * gridHeight) / (gridWidth * Math.sqrt(2));
@@ -76,48 +80,67 @@ const HexagonGrid = (props) => {
     return dimensions;
   };
 
+  const [productList, setProductList] = React.useState([]);
+
+  React.useEffect(() => {
+    GetAllProduct().then(res => {
+      setProductList(res.products?.slice(0, res.products.length - 4));
+    }).catch(err => {
+      console.log(err)
+    })
+  }, []);
+  
+  const router = useRouter() ;
+
   return (
-    <svg width={gridWidth} height={gridHeight} x={x} y={y}>
-      {times(state.rows, (row) => {
-        const remaining = hexagons.length - row * state.columns;
-        const columns = remaining < state.columns ? remaining : state.columns;
-        const rowDim = getRowDimensions(row);
-        return (
-          <svg
-            key={row}
-            width={rowDim.width}
-            height={rowDim.height}
-            y={rowDim.y}
-          >
-            {times(columns, (col) => {
-              const iHexagon = row * state.columns + col;
-              const hexagon = hexagons[iHexagon];
-              const hexDim = getHexDimensions(row, col);
-              const _hexProps = tryInvoke(hexProps, [hexagon], hexProps);
-              return (
-                iHexagon % 4 === 0 ?
-                <></>
-                :
-                <svg
-                  key={iHexagon}
-                  height={hexDim.height}
-                  width={hexDim.width}
-                  x={`${hexDim.x}px`}
-                  id={iHexagon}
-                  className=""
-                >
-                  <Hexagon flatTop className={`hex${iHexagon}`} backgroundImage={`assets/images/hexagon/${iHexagon}.png`}>
-                    {tryInvoke(renderHexagonContent, [hexagon], <tspan />)}
-                  </Hexagon>
-                </svg>
-              );
-            })}
-          </svg>
-        );
-      })}
-    </svg>
+    <MainContainer>
+      <svg width={gridWidth} height={gridHeight} x={x} y={y}>
+        {times(state.rows, (row) => {
+          const remaining = hexagons.length - row * state.columns;
+          const columns = remaining < state.columns ? remaining : state.columns;
+          const rowDim = getRowDimensions(row);
+          return (
+            <svg
+              key={row}
+              width={rowDim.width}
+              height={rowDim.height}
+              y={rowDim.y}
+            >
+              {times(columns, (col) => {
+                const iHexagon = row * state.columns + col;
+                const hexagon = hexagons[iHexagon];
+                const hexDim = getHexDimensions(row, col);
+                const _hexProps = tryInvoke(hexProps, [hexagon], hexProps);
+                return (
+                  iHexagon % 4 !== 0 &&
+                  <svg
+                    key={iHexagon}
+                    height={hexDim.height}
+                    width={hexDim.width}
+                    x={`${hexDim.x}px`}
+                    id={iHexagon}
+                    className=""
+                  >
+                    <Hexagon flatTop className={`hex${iHexagon}`} backgroundImage={productList[iHexagon]?.image != undefined ? `${SERVER_URL + '\\images\\products\\' + productList[iHexagon]?.image}` : ''} onClick={() => {router.push(`/product-details/${productList[iHexagon]?.id}`)}} >
+                      {tryInvoke(renderHexagonContent, [hexagon], <tspan />)}
+                    </Hexagon>
+                  </svg>
+                );
+              })}
+            </svg>
+          );
+        })}
+      </svg>
+    </MainContainer>
   );
 };
+
+const MainContainer = tagStyled.div`
+  image {
+    width: 300px;
+    x: 100;
+  }
+`
 
 HexagonGrid.propTypes = {
   gridWidth: PropTypes.number.isRequired,

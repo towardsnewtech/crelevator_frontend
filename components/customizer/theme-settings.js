@@ -64,12 +64,12 @@ const ThemeSettings = () => {
     <div>
       <div className="sidebar-btn dark-light-btn">
         <div className="dark-light">
-          <div
+          {/* <div
             className="theme-layout-version"
             onClick={() => changeThemeLayout()}
           >
             {themeLayout ? <Media src={lightImg.src} className="img-fluid" alt="" /> : <Media src={darkImg.src} className="img-fluid" alt="" /> }
-          </div>
+          </div> */}
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import Slider from "react-slick";
 import { tools_product_4 } from "../../../services/script";
 import { useQuery } from "@apollo/client";
@@ -9,50 +9,22 @@ import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
 import { WishlistContext } from "../../../helpers/wishlist/WishlistContext";
 import { Container, Row, Col } from "reactstrap";
 import ProductItem from "../../../components/common/product-box/ProductBox12";
-
-const GET_PRODUCTS = gql`
-  query productByCategory($category: String!) {
-    productByCategory(category: $category) {
-      id
-      title
-      description
-      type
-      brand
-      collection
-      category
-      price
-      sale
-      discount
-      new
-      images {
-        image_id
-        id
-        alt
-        src
-      }
-      variants {
-        variant_id
-        id
-        sku
-        size
-        color
-        image_id
-      }
-    }
-  }
-`;
+import { GetAllProduct } from "../../../action/products";
 
 const ParallaxSlider = () => {
   const context = useContext(CartContext);
   const compareContext = useContext(CompareContext);
   const curContext = useContext(CurrencyContext);
   const wishListContext = useContext(WishlistContext);
+  const [products, setProducts] = useState([]) ;
 
-  var { data } = useQuery(GET_PRODUCTS, {
-    variables: {
-      category: "tools",
-    },
-  });
+  useEffect(() => {
+    GetAllProduct().then(res => {
+      setProducts(res.products)
+    }).catch(err => {
+      console.log(err);
+    })
+  }, []);
 
   return (
     <Fragment>
@@ -95,8 +67,8 @@ const ParallaxSlider = () => {
                 {...tools_product_4}
                 className="tools-product-4 product-m"
               >
-                {data &&
-                  data.productByCategory.slice(0, 8).map((data, i) => {
+                {products &&
+                  products.slice(0, 8).map((data, i) => {
                     return (
                       <ProductItem
                         product={data}
@@ -104,7 +76,6 @@ const ParallaxSlider = () => {
                         spanClass={true}
                         addToCompare={() => compareContext.addToCompare(data)}
                         addCart={() => context.addToCart(data)}
-                        key={i}
                         addWishlist={() => wishListContext.addToWish(data)}
                       />
                     );

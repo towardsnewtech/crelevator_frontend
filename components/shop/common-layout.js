@@ -6,6 +6,10 @@ import Helmet from "react-helmet";
 import favicon from "../../public/assets/images/favicon/favicon.ico";
 import MasterFooter from "../footers/common/MasterFooter";
 import { selectMode } from "../../store/slices/settingSlice";
+import FooterBanner from "../footers/footer-banner";
+import Banner from "../../pages/home/component/Banner";
+import Header from "../headers/Header";
+import BgHeader from "../headers/BgHeader";
 
 const CommonLayout = ({ children, title, parent, subTitle, newLatter=true }) => {
   const modeState = useSelector(selectMode);
@@ -16,9 +20,14 @@ const CommonLayout = ({ children, title, parent, subTitle, newLatter=true }) => 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/x-icon" href={favicon ? favicon : ""} />
       </Helmet> */}
-      <HeaderOne topClass="top-header" logoName={modeState ? "logo1.png" : "logo.png"} />
-      <Breadcrubs title={title} parent={parent} subTitle={subTitle} />
+      <div className="tools-bg">
+        {/* <HeaderOne topClass="top-header" logoName={modeState ? "logo1.png" : "logo.png"} /> */}
+        <BgHeader logoName={modeState ? "logo1.png" : "logo.png"} />
+      </div>
+      {/* <HeaderOne topClass="top-header" logoName={modeState ? "logo1.png" : "logo.png"} /> */}
+      {/* <Breadcrubs title={title} parent={parent} subTitle={subTitle} /> */}
       <>{children}</>
+      <FooterBanner />
       <MasterFooter
         footerClass={"footer-light"}
         footerLayOut={"white-layout"}

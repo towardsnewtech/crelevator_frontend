@@ -85,24 +85,24 @@ const Profile = () => {
     return (
         authItem ?
             <CommonLayout parent="home" title="profile" newLatter={false}>
-                <section className="contact-page register-page">
+                <section className="contact-page register-page m-3">
                     <Container>
                         <Row>
                             <Col sm="12" className="theme-form">
                                 <h3>PERSONAL DETAIL</h3>
                                 <Row>
                                     <Col md="6">
-                                        <Label className="form-label" for="name">First Name</Label>
+                                        <Label className="form-label" htmlFor="name">First Name</Label>
                                         <Input type="text" className="form-control" id="name" placeholder="Enter Your name"
                                             required="" value={firstName} onChange={changeFirstName} />
                                     </Col>
                                     <Col md="6">
-                                        <Label className="form-label" for="email">Last Name</Label>
+                                        <Label className="form-label" htmlFor="email">Last Name</Label>
                                         <Input type="text" className="form-control" id="last-name"
                                             placeholder="Email" required="" value={lastName} onChange={changeLastName} />
                                     </Col>
                                     <Col md="6">
-                                        <Label className="form-label" for="email">Email</Label>
+                                        <Label className="form-label" htmlFor="email">Email</Label>
                                         <Input type="email" className="form-control" id="email" placeholder="Email"
                                             required="" value={email} onChange={changeEmail} />
                                     </Col>                                        

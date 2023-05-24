@@ -6,16 +6,18 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Container, Row, Form, Label, Input, Col } from 'reactstrap';
 import Link from 'next/link';
 import { setAuthState } from '../../../store/slices/authSlice';
-import {useRouter} from 'next/router';
-import { 
+import { useRouter } from 'next/router';
+import {
     signin
 } from '../../../action/index';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const Login = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [captcha, setCaptcha] = React.useState(false) ;
 
     const changeEmail = (e) => {
         setEmail(e.target.value);
@@ -23,6 +25,10 @@ const Login = () => {
 
     const changePassword = (e) => {
         setPassword(e.target.value);
+    }
+
+    const handleReCaptcha = (value) => {
+        setCaptcha(value);
     }
 
     const notify = (text, success) => {
@@ -36,7 +42,7 @@ const Login = () => {
             progress: undefined,
             theme: "light",
         };
-        if(success) {
+        if (success) {
             toast.success(text, options);
         } else {
             toast.warn(text, options);
@@ -44,20 +50,27 @@ const Login = () => {
     };
 
     const login = () => {
+
+       if (captcha == false) {
+            notify("ReCAPTCHA First!")
+           return;
+       }
+
         const data = {
             email: email,
             password: password,
         };
 
         signin(data).then(res => {
-            if(res) {
-                if(res.success) {
+            if (res) {
+                if (res.success) {
                     notify("Login Successed!", true);
                     localStorage.setItem('user', JSON.stringify({
                         user_id: res.user.id,
                         email: res.user.email,
                         first_name: res.user.first_name,
                         last_name: res.user.last_name,
+                        photo: res.user.User_Address.photo
                     }));
                     localStorage.setItem('token', res.token);
                     dispatch(setAuthState(true));
@@ -72,23 +85,33 @@ const Login = () => {
     return (
         <>
             <CommonLayout parent="home" title="login" newLatter={false}>
-                <section className="login-page" style={{paddingTop: "10px",}}>
+                <section className="login-page" style={{ paddingTop: "10px", }}>
                     <Container>
-                        <Row style={{display: "flex", width: "100%", margin: "0 auto", justifyContent: "center"}}>
+                        <Row style={{ display: "flex", width: "100%", margin: "10px auto", justifyContent: "center" }}>
                             <Col lg="6">
                                 <div className="theme-card">
                                     <Form className="theme-form">
                                         <div className="form-group">
-                                            <Label className="form-label" for="email">Email</Label>
-                                            <Input type="text" className="form-control" id="email" 
+                                            <Label className="form-label" htmlFor="email">Email</Label>
+                                            <Input type="text" className="form-control" id="email"
                                                 placeholder="Email" required="" value={email} onChange={changeEmail} />
                                         </div>
                                         <div className="form-group">
-                                            <Label className="form-label" for="review">Password</Label>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                <Label className="form-label" htmlFor="review">Password</Label>
+                                                <a href={'/password_reset'}>Forgot password?</a>
+                                            </div>
                                             <Input type="password" className="form-control" id="review"
                                                 placeholder="Enter your password" required=""
                                                 value={password} onChange={changePassword} />
-                                        </div><a href="#" className="btn btn-solid" onClick={login}>Login</a>
+                                        </div>
+                                        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+                                            <ReCAPTCHA
+                                                sitekey='6LceBvclAAAAAHw9l_OO-1LwE0QfHkgSWEfexdoh'
+                                                onChange={handleReCaptcha}
+                                            />
+                                        </div>
+                                        <a href="#" className="btn btn-solid" onClick={login}>Login</a><span>&nbsp;&nbsp;&nbsp;Don't have an account? <Link href={'/page/account/register'}>Sign up</Link>.</span>
                                     </Form>
                                 </div>
                             </Col>

@@ -135,27 +135,27 @@ const Address = () => {
                                 <h3>SHIPPING ADDRESS</h3>
                                 <Row>
                                     <Col md="6">
-                                        <Label className="form-label" for="name">flat / plot</Label>
+                                        <Label className="form-label" htmlFor="name">flat / plot</Label>
                                         <Input type="text" className="form-control" id="home-ploat" placeholder="company name"
                                             required="" value={company} onChange={changeCompany} />
                                     </Col>
                                     <Col md="6">
-                                        <Label className="form-label" for="name">Address1</Label>
+                                        <Label className="form-label" htmlFor="name">Address1</Label>
                                         <Input type="text" className="form-control" id="address-one" placeholder="Address"
                                             required="" value={address1} onChange={changeAddress1} />
                                     </Col>
                                     <Col md="6">
-                                        <Label className="form-label" for="name">Address2</Label>
+                                        <Label className="form-label" htmlFor="name">Address2</Label>
                                         <Input type="text" className="form-control" id="address-two" placeholder="Address"
                                             required="" value={address2} onChange={changeAddress2} />
                                     </Col>
                                     <Col md="6">
-                                        <Label className="form-label" for="email">Zip Code</Label>
+                                        <Label className="form-label" htmlFor="email">Zip Code</Label>
                                         <Input type="number" className="form-control" id="zip-code" placeholder="zip-code"
                                             required="" value={postcode} onChange={changePostcode} />
                                     </Col>
                                     <Col md="6" className="select_input">
-                                        <Label className="form-label" for="review">Country</Label>
+                                        <Label className="form-label" htmlFor="review">Country</Label>
                                         <select className="form-select py-2" size="1" value={country} onChange={changeCountry}>
                                             {
                                                 countryCodes.map((item, index) => {
@@ -165,17 +165,17 @@ const Address = () => {
                                         </select>
                                     </Col>
                                     <Col md="6">
-                                        <Label className="form-label" for="review">City</Label>
+                                        <Label className="form-label" htmlFor="review">City</Label>
                                         <Input type="text" className="form-control" id="city" placeholder="City"
                                             required="" value={city} onChange={changeCity} />
                                     </Col>
                                     <Col md="6">
-                                        <Label className="form-label" for="review">Region/State</Label>
+                                        <Label className="form-label" htmlFor="review">Region/State</Label>
                                         <Input type="text" className="form-control" id="region-state"
                                             placeholder="Region/state" required="" value={state} onChange={changeState} />
                                     </Col>
                                     <Col md="6">
-                                        <Label className="form-label" for="review">Phone number</Label>
+                                        <Label className="form-label" htmlFor="review">Phone number</Label>
                                         <Input type="number" className="form-control" id="review" placeholder="Enter your number"
                                             required="" value={phone} onChange={changePhone} />
                                     </Col>

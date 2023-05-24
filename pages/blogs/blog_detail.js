@@ -140,16 +140,16 @@ const BlogDetail = () => {
                             <Form className="theme-form">
                                 <Row>
                                     <Col md="12">
-                                        <Label className="form-label" for="name">Name</Label>
+                                        <Label className="form-label" htmlFor="name">Name</Label>
                                         <Input type="text" className="form-control" id="name" placeholder="Enter Your name"
                                             required="" />
                                     </Col>
                                     <Col md="12">
-                                        <Label className="form-label" for="email">Email</Label>
+                                        <Label className="form-label" htmlFor="email">Email</Label>
                                         <Input type="text" className="form-control" id="email" placeholder="Email" required="" />
                                     </Col>
                                     <Col md="12">
-                                        <Label className="form-label" for="exampleFormControlTextarea1">Comment</Label>
+                                        <Label className="form-label" htmlFor="exampleFormControlTextarea1">Comment</Label>
                                         <textarea className="form-control" placeholder="Write Your Comment"
                                             id="exampleFormControlTextarea1" rows="6"></textarea>
                                     </Col>

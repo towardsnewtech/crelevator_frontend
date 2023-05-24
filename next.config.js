@@ -1,9 +1,7 @@
 const removeImports = require("next-remove-imports");
 
 const nextConfig = removeImports({
-  env: {
-    API_URL: "http://localhost:4000/graphql",
-  },
+  hmr: false,
   reactStrictMode: true,
   webpack(config, options) {
     config.module.rules.push({
@@ -13,10 +11,12 @@ const nextConfig = removeImports({
         options: {
           limit: 100000,
         },
+        hmr: false, // disable HMR for url-loader
       },
     });
 
     return config;
   },
-  
 });
+
+module.exports = nextConfig;

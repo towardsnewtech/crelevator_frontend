@@ -46,17 +46,6 @@ const MasterFooter = ({
   return (
     <div>
       <footer className={footerClass}>
-        {newLatter ? (
-          <div className={footerLayOut}>
-            <Container fluid={containerFluid ? containerFluid : ""}>
-              <section className={footerSection}>
-              </section>
-            </Container>
-          </div>
-        ) : (
-          <div style={{paddingTop: "20px"}}></div>
-        )}
-
         <section className={belowSection}>
           <Container fluid={belowContainerFluid ? belowContainerFluid : ""}>
             <Row className="footer-theme partition-f">
@@ -83,9 +72,7 @@ const MasterFooter = ({
                       <LogoImage logo={logoName} />
                     </div>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam,
+                      CR Elevator Supply has established itself as a leading elevator supplier for the vertical transportation on industry since 2020. Located in Atlanta hub for best distribution throughout the country. 
                     </p>
                     <div className="footer-social">
                       <ul>
@@ -142,7 +129,7 @@ const MasterFooter = ({
                         } else setIsOpen(true);
                       }}
                     >
-                      my account
+                      USEFUL
                       <span className="according-menu"></span>
                     </h4>
                   </div>
@@ -152,67 +139,24 @@ const MasterFooter = ({
                     <div className="footer-contant">
                       <ul>
                         <li>
-                          <Link href={`/shop/left_sidebar`}>
-                            <a>womens</a>
+                          <Link href={`/`}>
+                            <a> HOME </a>
                           </Link>
                         </li>
                         <li>
-                          <Link href={`/shop/left_sidebar`}>
-                            <a> clothing </a>
+                          <Link href={`/products`}>
+                            <a>PRODUCTS</a>
                           </Link>
                         </li>
                         <li>
-                          <Link href={`/shop/left_sidebar`}>
-                            <a>accessories</a>
+                          <Link href={`/about-us`}>
+                            <a> ABOUT US </a>
                           </Link>
                         </li>
                         <li>
-                          <Link href={`/shop/left_sidebar`}>
-                            <a> featured </a>
+                          <Link href={`/resources/faq`}>
+                            <a>FAQ</a>
                           </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </Collapse>
-                </div>
-              </Col>
-              <Col>
-                <div className="sub-title">
-                  <div
-                    className={`footer-title ${isOpen && collapse == 3 ? "active" : ""
-                      } `}
-                  >
-                    <h4
-                      onClick={() => {
-                        if (width) {
-                          setIsOpen(!isOpen);
-                          setCollapse(3);
-                        } else setIsOpen(true);
-                      }}
-                    >
-                      why we choose
-                      <span className="according-menu"></span>
-                    </h4>
-                  </div>
-                  <Collapse
-                    isOpen={width ? (collapse === 3 ? isOpen : false) : true}
-                  >
-                    <div className="footer-contant">
-                      <ul>
-                        <li>
-                          <a href="#">shipping & return</a>
-                        </li>
-                        <li>
-                          <a href="#">secure shopping</a>
-                        </li>
-                        <li>
-                          <a href="#">gallary</a>
-                        </li>
-                        <li>
-                          <a href="#">affiliates</a>
-                        </li>
-                        <li>
-                          <a href="#">contacts</a>
                         </li>
                       </ul>
                     </div>
@@ -233,7 +177,7 @@ const MasterFooter = ({
                         } else setIsOpen(true);
                       }}
                     >
-                      store information
+                      CR Elevator
                       <span className="according-menu"></span>
                     </h4>
                   </div>
@@ -243,14 +187,14 @@ const MasterFooter = ({
                     <div className="footer-contant">
                       <ul className="contact-list">
                         <li>
-                          <i className="fa fa-map-marker"></i>CRElevator
+                          <i className="fa fa-map-marker"></i>820 Shallowford Rd <br/> Kennesaw, GA 30144
                         </li>
                         <li>
-                          <i className="fa fa-phone"></i>Call Us: +1 (770) 852-5050
+                          <i className="fa fa-phone"></i> +1 (888) 209-4030 <br/> +1 (770) 852-5050
                         </li>
                         <li>
-                          <i className="fa fa-envelope-o"></i>Email Us:{" "}
-                          <a href="#">sele@crelevator.com</a>
+                          <i className="fa fa-envelope-o"></i>
+                          <a href="#">sales@crelevator.com</a>
                         </li>
                       </ul>
                     </div>
