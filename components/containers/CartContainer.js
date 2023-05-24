@@ -4,29 +4,39 @@ import CartHeader from "../headers/common/cart-header";
 import CartContext from "../../helpers/cart";
 import { Media } from "reactstrap";
 import { CurrencyContext } from "../../helpers/Currency/CurrencyContext";
+import { fetchCartList, selectCarts } from "../../store/slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const CartContainer = ({ icon }) => {
   const context = useContext(CartContext);
   const currContext = useContext(CurrencyContext);
   const symbol = currContext.state.symbol;
-  const cartList = context.state;
   const total = context.cartTotal;
+  const cartList = useSelector(selectCarts);
+
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    dispatch(fetchCartList())
+  }, [])
+
+  React.useEffect(() => {
+    console.log(cartList)
+  }, [cartList])
 
   return (
     <Fragment>
       <li className="onhover-div mobile-cart">
-        <div className="cart-qty-cls">{cartList.length}</div>
-        <Link href={`/page/account/cart`}>
+        <div className="cart-qty-cls">{cartList?.length}</div>
+        <Link href={`/cart`}>
           <div href={null}>
             <Media src={icon} className="img-fluid" alt="" />
             <i className="fa fa-shopping-cart"></i>
           </div>
         </Link>
         <ul className="show-div shopping-cart">
-          {cartList.map((item, index) => (
-            <CartHeader key={index} item={item} total={total} symbol={symbol} />
-          ))}
-          {cartList.length > 0 ? (
+          
+          {cartList?.length > 0 ? (
             <div>
               <li>
                 <div className="total">

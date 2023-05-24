@@ -9,7 +9,10 @@ import { CurrencyContext } from "../../../helpers/Currency/CurrencyContext";
 import { WishlistContext } from "../../../helpers/wishlist/WishlistContext";
 import { Container, Row, Col } from "reactstrap";
 import ProductItem from "../../../components/common/product-box/ProductBox12";
-import { GetAllProduct } from "../../../action/products";
+import { GetAllProduct, addCart } from "../../../action/products";
+import { toast } from "react-toastify";
+import { fetchCartList } from "../../../store/slices/cartSlice";
+import { useDispatch } from "react-redux";
 
 const ParallaxSlider = () => {
   const context = useContext(CartContext);
@@ -17,6 +20,7 @@ const ParallaxSlider = () => {
   const curContext = useContext(CurrencyContext);
   const wishListContext = useContext(WishlistContext);
   const [products, setProducts] = useState([]) ;
+  const dispatch = useDispatch() ;
 
   useEffect(() => {
     GetAllProduct().then(res => {
@@ -25,6 +29,34 @@ const ParallaxSlider = () => {
       console.log(err);
     })
   }, []);
+
+  const notify = (text, success) => {
+    const options = {
+      position: "top-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    };
+    if (success) {
+      toast.success(text, options);
+    } else {
+      toast.warn(text, options);
+    }
+  };
+
+  const handleAddCart = async (id) => {
+    let res = await addCart(id)
+    if (res.success) {
+      dispatch(fetchCartList());
+      notify("Add Product to Cart Successfully", true);
+    } else {
+      notify("This Product already added to Cart", false);
+    }
+  }
 
   return (
     <Fragment>
@@ -75,7 +107,7 @@ const ParallaxSlider = () => {
                         key={i}
                         spanClass={true}
                         addToCompare={() => compareContext.addToCompare(data)}
-                        addCart={() => context.addToCart(data)}
+                        addCart={() => handleAddCart(data.id)}
                         addWishlist={() => wishListContext.addToWish(data)}
                       />
                     );

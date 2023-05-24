@@ -8,7 +8,10 @@ import CartContext from "../../../helpers/cart";
 import { WishlistContext } from "../../../helpers/wishlist/WishlistContext";
 import { CompareContext } from "../../../helpers/Compare/CompareContext";
 import PostLoader from "../PostLoader";
-import { GetAllProduct } from "../../../action/products";
+import { GetAllProduct, addCart } from "../../../action/products";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { fetchCartList } from "../../../store/slices/cartSlice";
 
 const GET_PRODUCTS = gql`
   query products($type: _CategoryType!, $indexFrom: Int!, $limit: Int!) {
@@ -56,6 +59,7 @@ const TopCollection = ({
   const contextCompare = useContext(CompareContext);
   const quantity = context.quantity;
   const [data, setData] = React.useState();
+  const dispatch = useDispatch() ;
 
   React.useEffect(() => {
     GetAllProduct(data).then(res => {
@@ -68,6 +72,34 @@ const TopCollection = ({
       }
     })
   }, [])
+
+  const notify = (text, success) => {
+    const options = {
+      position: "top-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    };
+    if (success) {
+      toast.success(text, options);
+    } else {
+      toast.warn(text, options);
+    }
+  };
+
+  const handleAddCart = async (id) => {
+    let res = await addCart(id)
+    if (res.success) {
+      dispatch(fetchCartList());
+      notify("Add Product to Cart Successfully", true);
+    } else {
+      notify("This Product already added to Cart", false);
+    }
+  }
 
   return (
     <>
@@ -119,7 +151,7 @@ const TopCollection = ({
                             addWishlist={() =>
                               contextWishlist.addToWish(product)
                             }
-                            addCart={() => context.addToCart(product, quantity)}
+                            addCart={() => handleAddCart(product.id)}
                           />
                         </div>
                       ))}

@@ -19,6 +19,10 @@ import CreateMarkUp from "../../../components/common/CreateMarkUp";
 import useWindowSize from "../../common";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { makeStyles } from "@mui/styles";
+import { addCart } from "../../../action/products";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { fetchCartList } from "../../../store/slices/cartSlice";
 
 const useStyles = makeStyles({
   title: {
@@ -28,7 +32,7 @@ const useStyles = makeStyles({
 })
 
 const ProductTab = ({ data }) => {
-
+  const dispatch = useDispatch();
   const controller_datas = [
     {
       name: 'HYDRAULIC CONTROLLER',
@@ -44,12 +48,8 @@ const ProductTab = ({ data }) => {
     }
   ]
   const [index, setIndex] = useState(0);
-  const [curData, setCurData] = useState(controller_datas[0]) ;
-  const [imgUrl, setImgUrl] = useState("/assets/images/new/Hydra Product Image Medium 400-400 72dpi.png") ;
-  
-  React.useEffect(() => {
-    console.log(curData)
-  }, [curData])
+  const [curData, setCurData] = useState(controller_datas[0]);
+  const [imgUrl, setImgUrl] = useState("/assets/images/new/Hydra Product Image Medium 400-400 72dpi.png");
 
   const [activeTab, setActiveTab] = useState("2");
   const size = useWindowSize();
@@ -57,6 +57,34 @@ const ProductTab = ({ data }) => {
 
   const handleGotoBack = () => {
     router.push(`/products/residential/${data.SubCategory.name.toLowerCase()}?id=${data.SubCategory.id}`)
+  }
+
+  const notify = (text, success) => {
+    const options = {
+      position: "top-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    };
+    if (success) {
+      toast.success(text, options);
+    } else {
+      toast.warn(text, options);
+    }
+  };
+
+  const handleAddCart = async () => {
+    let res = await addCart(router.query.id)
+    if (res.success) {
+      dispatch(fetchCartList());
+      notify("Add Product to Cart Successfully", true);
+    } else {
+      notify("This Product already added to Cart", false);
+    }
   }
 
   const classes = useStyles();
@@ -68,9 +96,9 @@ const ProductTab = ({ data }) => {
           {
             window.location.pathname.indexOf('19') > 0 &&
             <Col sm="12" lg="12">
-            <img src={'/assets/images/new/Hydra Product Image Medium 400-400 72dpi.png'} width={'10%'} style={{ marginRight: '3rem' }} onClick={() => { setIndex(0), setCurData(controller_datas[0]), setImgUrl('/assets/images/new/Hydra Product Image Medium 400-400 72dpi.png') }} />
-            <img src={'/assets/images/new/Controlle Product Image Medium 400-400 72dpi.png'} width={'10%'} onClick={() => { setIndex(1), setCurData(controller_datas[1]), setImgUrl('/assets/images/new/Controlle Product Image Medium 400-400 72dpi.png') }} />
-          </Col>
+              <img src={'/assets/images/new/Hydra Product Image Medium 400-400 72dpi.png'} width={'10%'} style={{ marginRight: '3rem' }} onClick={() => { setIndex(0), setCurData(controller_datas[0]), setImgUrl('/assets/images/new/Hydra Product Image Medium 400-400 72dpi.png') }} />
+              <img src={'/assets/images/new/Controlle Product Image Medium 400-400 72dpi.png'} width={'10%'} onClick={() => { setIndex(1), setCurData(controller_datas[1]), setImgUrl('/assets/images/new/Controlle Product Image Medium 400-400 72dpi.png') }} />
+            </Col>
           }
           <Col sm="12" lg="12">
             {
@@ -189,7 +217,17 @@ const ProductTab = ({ data }) => {
                 </Row>
             }
           </Col>
-          <Col sm="12" lg="12" style={{ display: 'flex', justifyContent: 'flex-end' }} className="mb-3">
+          <Col sm="12" lg="12" style={{ display: 'flex', justifyContent: 'flex-end', gap: 5 }} className="mb-3">
+            <Button
+              onClick={handleAddCart}
+              style={{
+                backgroundColor: 'rgb(199, 32, 24)',
+                width: '100px',
+                border: 'none'
+              }}
+            >
+              Add Cart
+            </Button>
             <Button
               onClick={handleGotoBack}
               style={{

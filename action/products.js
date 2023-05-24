@@ -52,3 +52,35 @@ export const GetAllProduct = async () => {
         console.log(error);
     }
 }
+
+export const addCart = async (id) => {
+    try {
+        let userid = JSON.parse(localStorage.getItem("user")).user_id ;
+        let res = await axios.post(`${SERVER_URL}/api/cart/add`, {productid: parseInt(id), userid}) ;
+
+        return res.data ;
+    } catch (error) {
+        console.log(error) ;
+    }
+}
+
+export const getCart = async () => {
+    try {
+        let userid = JSON.parse(localStorage.getItem("user")).user_id ;
+        let res = await axios.post(`${SERVER_URL}/api/cart/get`, {userid}) ;
+
+        return res.data;
+    } catch (error) {
+        console.log(error) ;
+    }
+}
+
+export const removeCart = async (id) => {
+    try {
+        let res = await axios.post(`${SERVER_URL}/api/cart/remove`, {id}) ;
+
+        return res.data;
+    } catch (err) {
+        console.log(err) ;
+    }
+}
