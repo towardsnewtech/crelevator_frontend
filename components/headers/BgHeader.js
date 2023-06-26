@@ -7,7 +7,6 @@ import { Media, Container, Row, Col } from "reactstrap";
 import LogoImage from "./common/logo";
 import cart from "../../public/assets/images/jewellery/icon/cart.png";
 import search from "../../public/assets/images/jewellery/icon/search.png";
-import settings from "../../public/assets/images/icon/setting.png";
 import SearchOverlay from "./common/search-overlay";
 import { useRouter } from "next/router";
 import tagStyled from 'styled-components'
